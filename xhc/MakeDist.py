@@ -11,7 +11,7 @@
 # Author:      Alexander Skwar <ASkwar@email-server.info>                     
 #                                                                             
 # Created:     2003/12/03                                                     
-# RCS-ID:      $Id: MakeDist.py,v 1.4 2003/03/15 11:33:20 askwar Exp $                                              
+# RCS-ID:      $Id: MakeDist.py,v 1.5 2003/03/15 12:35:29 askwar Exp $                                              
 # Copyright:   (c) 2003                                                       
 # Licence:     GPL                                                            
 #-----------------------------------------------------------------------------
@@ -98,21 +98,27 @@ def MakeRK():
     # first script under the "dist" directory.
     # Change to this directory before calling rk
     old_cwd = os.getcwd()
+    rk_name = ''
     try:
         os.chdir(os.path.join('dist', os.path.splitext(scripts[0])[0]))
         
         # Call rk
-        cmd = '%s %s "..\%s-%s.exe" *' % (os.path.join(rk['path'], rk['executable']), rk['params'], name.replace(' ', "_"), version)
+        rk_name = "%s-%s.exe" % (name.replace(' ', "_"), version)
+        cmd = '%s %s "..\%s" *' % (os.path.join(rk['path'], rk['executable']), rk['params'], rk_name)
         print "Running: " + cmd + "\n"
         os.system(cmd)
         
     finally:
         os.chdir(old_cwd)
+        
+    return rk_name
 
 def MakeSRC():
     """Create source distribution files (.tar.bz2, .tar.gz and .zip)."""
     
     import shutil
+
+    source_files = []
     
     basedir = os.path.join('dist', short_name + '-' + version)
     if not os.path.isdir(basedir):
@@ -128,26 +134,57 @@ def MakeSRC():
         
     # All the files have been copied.  Create distributable files.
     dist_name = "%s-%s" % (short_name, version)
-    cmd = 'tar cf - -C dist %s | bzip2 -v9zc - > %s' % (dist_name, os.path.join('dist', "%s.tar.bz2" % dist_name))
+
+    # Create .tar.bz2
+    src_name = "%s.tar.bz2" % dist_name
+    source_files.append(src_name)
+    cmd = 'tar cf - -C dist %s | bzip2 -v9zc - > %s' % (dist_name, os.path.join('dist', src_name))
     print "Running: " + cmd + "\n"
     os.system(cmd)
         
-    cmd = 'tar cf - -C dist %s | gzip -v9c - > %s' % (dist_name, os.path.join('dist', "%s.tar.gz" % dist_name))
+    # Create .tar.gz
+    src_name = "%s.tar.gz" % dist_name
+    source_files.append(src_name)
+    cmd = 'tar cf - -C dist %s | gzip -v9c - > %s' % (dist_name, os.path.join('dist', src_name))
     print "Running: " + cmd + "\n"
     os.system(cmd)
     
+    # Create .zip
     old_cwd = os.getcwd()
     os.chdir('dist')
     
-    cmd = 'zip -9ryS - %s > %s.zip' % (dist_name, dist_name)
+    src_name = '%s.Source.zip' % dist_name
+    source_files.append(src_name)
+    cmd = 'zip -9ryS - %s > %s' % (dist_name, src_name)
     print "Running: " + cmd + "\n"
     os.system(cmd)
     
     os.chdir(old_cwd)
+    
+    return source_files
 
-def Upload():
-    """Upload the created files to ftp://ftp.berlios.de/incoming/."""
-    pass
+def Upload(upload_files):
+    """Upload the source_files to ftp://ftp.berlios.de/incoming/."""
+    
+    print "Uploading files to FTP server."
+    from ftplib import FTP
+    ftp = FTP()
+    if upload['pasv']:
+        ftp.set_pasv(upload['pasv'])
+    try:
+        msg = ftp.connect(upload['host'])
+        print msg
+        msg = ftp.login(user = upload['user'], passwd = upload['pass'], acct = upload['acct'])
+        print msg
+        msg = ftp.cwd(upload['dir'])
+        for file_name in upload_files:
+            print "Sending file %s" % file_name
+            fileObj = file(os.path.join('dist', file_name), 'rb')
+            msg = ftp.storbinary('STOR %s' % file_name, fileObj)
+            fileObj.close()
+    finally:
+        msg = ftp.quit()
+        print msg
 
 def main():
     """Create Windows executable and SFX with rk."""
@@ -162,14 +199,17 @@ def main():
         if script_dir.strip() != '':
             os.chdir(script_dir)
 
+        # Initialize the list of files which should be uploaded
+        upload_files = []
         # Create Windows EXE with py2exe
         MakeEXE()
         # Create SFX with rk
-        MakeRK()
+        upload_files.append(MakeRK())
         # Create Source distribution
-        MakeSRC()
+        upload_files += MakeSRC()
         # Upload files
-        Upload()
+        if not upload is None:
+            Upload(upload_files)
         
     finally:
         # Change back to the old working directory

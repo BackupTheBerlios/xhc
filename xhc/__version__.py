@@ -33,3 +33,15 @@ files = glob.glob('*.py') + glob.glob('setup.*') + glob.glob('*.lnk') +         
         glob.glob(os.path.join('locale', '*', 'LC_MESSAGES', '*.po'))
 
 files = uniques(files)
+
+# Should the source distribution files be uploaded?
+# If this is not None, then they'll be uploaded
+# upload = None
+upload = {
+    'host': 'ftp.berlios.de',
+    'user': None, # ie. anonymous
+    'pass': None, # ie. default password
+    'acct': None, # ie. anonymous
+    'dir': '/incoming',
+    'pasv': True
+}
