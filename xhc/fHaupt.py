@@ -72,12 +72,11 @@ class wxfHaupt(wxFrame):
               parent=self.nbHaupt, pos=wxPoint(0, 0), size=wxSize(360, 202),
               style=wxTAB_TRAVERSAL)
 
-        self.cobZielhost = wxComboBox(choices=['tc34', 'r48', 'r73', 's07nfs',
-              's08nfs', 'localhost'], id=wxID_WXFHAUPTCOBZIELHOST,
+        self.cobZielhost = wxComboBox(choices=[], id=wxID_WXFHAUPTCOBZIELHOST,
               name='cobZielhost', parent=self.winStart, pos=wxPoint(136, 24),
               size=wxSize(168, 21), style=wxTAB_TRAVERSAL,
-              validator=wxDefaultValidator, value='tc34')
-        self.cobZielhost.SetLabel('tc34')
+              validator=wxDefaultValidator, value='')
+        self.cobZielhost.SetLabel('')
         EVT_KILL_FOCUS(self.cobZielhost, self.OnCobzielhostKillFocus)
 
         self.btnRun = wxButton(id=wxID_WXFHAUPTBTNRUN, label='Verbinden',
