@@ -5,7 +5,11 @@ from wxPython.wx import *
 
 import fHaupt
 
-modules ={'fHaupt': [1, 'Hauptfenster des Programmes', 'fHaupt.py']}
+modules ={'MakeDist': [0, 'Script for distributing the program', 'MakeDist.py'],
+ '__version__': [0, 'Version Number', '__version__.py'],
+ 'fHaupt': [1, 'Hauptfenster des Programmes', 'fHaupt.py'],
+ 'messages': [0, 'Generic message catalog for gettext', 'messages.pot'],
+ 'setup': [0, 'Setup information', 'setup.py']}
 
 class BoaApp(wxApp):
     def OnInit(self):

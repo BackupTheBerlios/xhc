@@ -11,29 +11,10 @@
 # Author:      Alexander Skwar <ASkwar@email-server.info>                     
 #                                                                             
 # Created:     2003/12/03                                                     
-# RCS-ID:      $Id: MakeDist.py,v 1.2 2003/03/15 09:31:11 askwar Exp $                                              
+# RCS-ID:      $Id: MakeDist.py,v 1.3 2003/03/15 09:49:13 askwar Exp $                                              
 # Copyright:   (c) 2003                                                       
 # Licence:     GPL                                                            
 #-----------------------------------------------------------------------------
-
-import glob
-
-# Version of the application
-version		= '1.0'
-# Name of the application
-name		= 'X-Host Chooser'
-# Description of the program
-description	= 'Launch pad for XWin.exe from Cygwin'
-# Additional data files - used by py2exe
-data_files	= [('.', ((glob.glob('*.gif') + glob.glob('*.ico')) + glob.glob('*.jpg') + glob.glob('*.xpm') + glob.glob('*.xpm')))]
-
-# Author of the program
-author		= 'Alexander Skwar'
-# Author's email
-author_email	= 'ASkwar@email-server.info'
-
-# Scripts of the program - used by py2exe
-scripts		= ['xhc.py']
 
 # Define path and options for rk archiver
 rk = {
@@ -42,7 +23,7 @@ rk = {
     # Name of the rk archiver executable in 'path'
     'executable':   'rk.exe',
     # Parameters used for calling rk.exe
-    'params':       r'-mx -SFX -S%(path)s\win32.sfx'
+    'params':       r'-r -mx -SFX -S%(path)s\win32.sfx'
 }
 
 # ------------------> Nothing user-configurable below here! <------------------ 
@@ -55,6 +36,7 @@ modules ={'setup': [0,
 import setup
 import os
 import sys
+from __version__ import *
 
 # Insert path into params, so that the SFX stub can be found
 rk['params'] = rk['params'] % rk
