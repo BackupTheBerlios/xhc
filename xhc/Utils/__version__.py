@@ -1,3 +1,15 @@
+#-----------------------------------------------------------------------------
+# Name:        __version__.py                                                 
+# Purpose:     Version information for the application                        
+#                                                                             
+# Author:      Alexander Skwar <ASkwar@email-server.info>                     
+#                                                                             
+# Created:     2003/17/03                                                     
+# RCS-ID:      $Id: __version__.py,v 1.2 2003/03/17 12:56:25 askwar Exp $                                          
+# Copyright:   (c) 2003                                                       
+# Licence:     GPL                                                            
+#-----------------------------------------------------------------------------
+
 import os.path
 opj = os.path.join
 
@@ -46,3 +58,4 @@ upload = {
     'pasv': True
 }
 upload = None
+

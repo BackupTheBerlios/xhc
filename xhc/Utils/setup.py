@@ -8,7 +8,7 @@
 # Author:      Alexander Skwar <ASkwar@email-server.info>                     
 #                                                                             
 # Created:     2003/12/03                                                     
-# RCS-ID:      $Id: setup.py,v 1.1 2003/03/17 11:57:54 askwar Exp $           
+# RCS-ID:      $Id: setup.py,v 1.2 2003/03/17 12:56:25 askwar Exp $           
 # Copyright:   (c) 2003                                                       
 # Licence:     GPL                                                            
 #-----------------------------------------------------------------------------
@@ -17,8 +17,8 @@ from distutils.core import setup
 from glob import glob
 import py2exe
 import os
-import os.path
-opj = os.path.join
+import os.path
+opj = os.path.join
 from __version__ import *
 from shutil import copyfile
 
@@ -33,14 +33,14 @@ def main():
         copyfile('setup.cfg', opj('..', 'setup.cfg'))
         
         os.chdir('..')
-        
-        new_data_files = []
-        for data_file in data_files:
-            file_entries = []
-            for file in data_file[1]:
+        
+        new_data_files = []
+        for data_file in data_files:
+            file_entries = []
+            for file in data_file[1]:
                 file_entries += glob(file)
             new_data_files += ((data_file[0], file_entries), )
-    
+    
         # Let py2exe build the executable
         setup(
         	name		= name,
@@ -63,3 +63,4 @@ if __name__ == '__main__':
         sys.exit(1)
 
     main()
+

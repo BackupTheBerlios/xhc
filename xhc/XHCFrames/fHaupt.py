@@ -1,5 +1,17 @@
 #Boa:Frame:fHaupt
 
+#-----------------------------------------------------------------------------
+# Name:        fHaupt.py                                                      
+# Purpose:     Main frame of the xhc application containing the class "fHaupt"
+#                                                                             
+# Author:      Alexander Skwar <ASkwar@email-server.info>                     
+#                                                                             
+# Created:     2003/17/03                                                     
+# RCS-ID:      $Id: fHaupt.py,v 1.2 2003/03/17 12:56:25 askwar Exp $                                               
+# Copyright:   (c) 2003                                                       
+# Licence:     GPL                                                            
+#-----------------------------------------------------------------------------
+
 from wxPython.wx import *
 from wxPython.lib.anchors import LayoutAnchors
 import gettext
@@ -989,3 +1001,4 @@ class fHaupt(wxFrame):
         event.GetEventObject().SetLabel(self.GetLabelText(event.GetEventObject().GetName()))
         
         event.Skip()
+

@@ -11,7 +11,7 @@
 # Author:      Alexander Skwar <ASkwar@email-server.info>                     
 #                                                                             
 # Created:     2003/12/03                                                     
-# RCS-ID:      $Id: MakeDist.py,v 1.1 2003/03/17 11:57:54 askwar Exp $        
+# RCS-ID:      $Id: MakeDist.py,v 1.2 2003/03/17 12:56:25 askwar Exp $        
 # Copyright:   (c) 2003                                                       
 # Licence:     GPL                                                            
 #-----------------------------------------------------------------------------
@@ -236,5 +236,6 @@ if __name__ == '__main__':
         sys.exit(1)
         
     main()
+
 
 
