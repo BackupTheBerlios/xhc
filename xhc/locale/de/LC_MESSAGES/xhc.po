@@ -1,0 +1,89 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR ORGANIZATION
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: X-Host Chooser 1.0\n"
+"POT-Creation-Date: Fri Mar 14 11:55:07 2003\n"
+"PO-Revision-Date: 2003-03-14 11:55+0200\n"
+"Last-Translator: Alexander Skwar <ASkwar@email-server.info>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: ENCODING\n"
+"Generated-By: pygettext.py 1.4\n"
+
+
+#: fHaupt.py:324
+msgid "Exit"
+msgstr "Beenden"
+
+#: fHaupt.py:325
+msgid "Connect"
+msgstr "Verbinden"
+
+#: fHaupt.py:326
+msgid "Save"
+msgstr "Speichern"
+
+#: fHaupt.py:327
+msgid "Search..."
+msgstr "Suche..."
+
+#: fHaupt.py:328
+msgid "Resolution:"
+msgstr "Auflösung:"
+
+#: fHaupt.py:329
+msgid "Local address:"
+msgstr "Eigene IP:"
+
+#: fHaupt.py:330
+msgid "-emulate3buttons"
+msgstr "-emulate3buttons"
+
+#: fHaupt.py:331
+msgid "-fp: Set search path for fonts to remote machine (Req.d for Sun's)?"
+msgstr "-fp: FontPath angeben (zwingend bei Sun's)?"
+
+#: fHaupt.py:332
+msgid "-nowinkill: Ctrl+Alt+Backspace does not exit the X Server"
+msgstr "-nowinkill: Ctrl+Alt+Backspace beendet den X Server nicht"
+
+#: fHaupt.py:333
+msgid "-nounixkill: Alt+F4 does not exit the X Server"
+msgstr "-nounixkill: Alt+F4 beendet den X Server nicht"
+
+#: fHaupt.py:334
+msgid "-once: Quit after termination of session"
+msgstr "-once: Kein Neustart nach Ende der Session"
+
+#: fHaupt.py:335
+msgid "-rootless: Don't use a root window"
+msgstr "-rootless: Anzeige ohne Hintergrundbild"
+
+#: fHaupt.py:336
+msgid "Broadcast (Connect to \"random\" server)"
+msgstr "Broadcast (Verbdindung zu \"zufälligem\" Rechner)"
+
+#: fHaupt.py:337
+msgid "Target host:"
+msgstr "Zielhost:"
+
+#: fHaupt.py:338
+msgid "Command:"
+msgstr "Auszuführender Befehl:"
+
+#: fHaupt.py:339
+msgid "timeout (ms)"
+msgstr "timeout (ms)"
+
+#: fHaupt.py:340
+msgid "Language:"
+msgstr "Sprache:"
+
+#: fHaupt.py:341
+msgid "XFree86 Binary:"
+msgstr "XFree86 Binary:"
+
