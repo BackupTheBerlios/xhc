@@ -2,7 +2,6 @@
 #Boa:App:BoaApp
 
 from wxPython.wx import *
-##import XHCFrames
 from XHCFrames import *
 
 modules ={'MakeDist': [0, 'Script for distributing the program', 'Utils/MakeDist.py'],
@@ -16,7 +15,6 @@ class BoaApp(wxApp):
     def OnInit(self):
         wxInitAllImageHandlers()
         self.main = fHaupt.create(None)
-##        self.main = XHCFrames.fHaupt.create(None)
         #workaround for running in wxProcess
         self.main.Show();self.main.Hide();self.main.Show()
         self.SetTopWindow(self.main)
