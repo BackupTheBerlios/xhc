@@ -5,7 +5,7 @@
 # Author:      Alexander Skwar <ASkwar@email-server.info>                     
 #                                                                             
 # Created:     2003/17/03                                                     
-# RCS-ID:      $Id: __version__.py,v 1.6 2003/07/08 20:53:20 askwar Exp $     
+# RCS-ID:      $Id: __version__.py,v 1.7 2003/07/08 20:55:31 askwar Exp $     
 # Copyright:   (c) 2003                                                       
 # Licence:     GPL                                                            
 #-----------------------------------------------------------------------------
@@ -61,4 +61,4 @@ upload = {
 }
 # Uncomment the following line to DISABLE upload.
 upload = None
-
+   
