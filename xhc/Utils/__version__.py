@@ -5,7 +5,7 @@
 # Author:      Alexander Skwar <ASkwar@email-server.info>                     
 #                                                                             
 # Created:     2003/17/03                                                     
-# RCS-ID:      $Id: __version__.py,v 1.4 2003/03/30 10:09:12 askwar Exp $                                          
+# RCS-ID:      $Id: __version__.py,v 1.5 2003/03/30 11:03:01 askwar Exp $                                          
 # Copyright:   (c) 2003                                                       
 # Licence:     GPL                                                            
 #-----------------------------------------------------------------------------
@@ -57,5 +57,6 @@ upload = {
     'dir': '/incoming',
     'pasv': True
 }
+# Uncomment the following line to DISABLE upload.
 # upload = None
 
