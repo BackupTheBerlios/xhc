@@ -6,7 +6,7 @@
 # Author:      Alexander Skwar <ASkwar@email-server.info>                     
 #                                                                             
 # Created:     2003/17/03                                                     
-# RCS-ID:      $Id: styles.css,v 1.4 2003/03/17 16:52:32 askwar Exp $         
+# RCS-ID:      $Id: styles.css,v 1.5 2003/04/18 18:25:15 askwar Exp $         
 # Copyright:   (c) 2003                                                       
 # Licence:     GPL                                                            
 #-----------------------------------------------------------------------------
@@ -83,7 +83,7 @@ ul.screenshots li img {
 
 
 body {
-	background-image: url(http://images.message-center.info/steel3.jpg);
+	background-image: url(Images/steel3.jpg);
         font-size:medium;
         font-family:tahoma, verdana, helvetica, sans-serif;
 }
@@ -91,7 +91,7 @@ body {
 
 .tdBanner {
 	color: inherit;
-	background-image: url(http://xfree86.cygwin.com/images/blackLines.gif);
+	background-image: url(Images/blackLines.gif);
 	background-color: #376806;
 	text-align: right;
 	height: 113px;
