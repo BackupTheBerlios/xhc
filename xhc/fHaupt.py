@@ -2,10 +2,13 @@
 
 from wxPython.wx import *
 from wxPython.lib.anchors import LayoutAnchors
+import gettext
 import time
 import string
 import os
 import socket
+
+# _ will be set by wxfHaupt.__init__()
 
 def create(parent):
     return wxfHaupt(parent)
@@ -15,14 +18,15 @@ def create(parent):
  wxID_WXFHAUPTBTNSUCHEXWINBINARY, wxID_WXFHAUPTCHBAUFLOESUNG, 
  wxID_WXFHAUPTCHBEIGENEIP, wxID_WXFHAUPTCHBEMULATE3BUTTONS, 
  wxID_WXFHAUPTCHBFONT, wxID_WXFHAUPTCHBNOUNIXKILL, wxID_WXFHAUPTCHBNOWINKILL, 
- wxID_WXFHAUPTCHBONCE, wxID_WXFHAUPTCHBROOTLESS, wxID_WXFHAUPTCOBAUFLOESUNG, 
- wxID_WXFHAUPTCOBXWINBINARY, wxID_WXFHAUPTCOBZIELHOST, wxID_WXFHAUPTNBHAUPT, 
- wxID_WXFHAUPTRBBROADCAST, wxID_WXFHAUPTRBZIELHOST, wxID_WXFHAUPTSTATICLINE1, 
- wxID_WXFHAUPTSTBEFEHL, wxID_WXFHAUPTSTEMULATE3BUTTONSTIMEOUT, 
+ wxID_WXFHAUPTCHBONCE, wxID_WXFHAUPTCHBROOTLESS, wxID_WXFHAUPTCHLANGUAGE, 
+ wxID_WXFHAUPTCOBAUFLOESUNG, wxID_WXFHAUPTCOBXWINBINARY, 
+ wxID_WXFHAUPTCOBZIELHOST, wxID_WXFHAUPTNBHAUPT, wxID_WXFHAUPTRBBROADCAST, 
+ wxID_WXFHAUPTRBZIELHOST, wxID_WXFHAUPTSTATICLINE1, wxID_WXFHAUPTSTBEFEHL, 
+ wxID_WXFHAUPTSTEMULATE3BUTTONSTIMEOUT, wxID_WXFHAUPTSTLANGUAGE, 
  wxID_WXFHAUPTSTXWINBINARY, wxID_WXFHAUPTTCBEFEHL, wxID_WXFHAUPTTCEIGENEIP, 
  wxID_WXFHAUPTTCEMULATE3BUTTONSTIMEOUT, wxID_WXFHAUPTWINSETUP, 
  wxID_WXFHAUPTWINSTART, 
-] = map(lambda _init_ctrls: wxNewId(), range(29))
+] = map(lambda _init_ctrls: wxNewId(), range(31))
 
 class wxfHaupt(wxFrame):
     def _init_coll_nbHaupt_Pages(self, parent):
@@ -40,31 +44,32 @@ class wxfHaupt(wxFrame):
     def _init_ctrls(self, prnt):
         # generated method, don't edit
         wxFrame.__init__(self, id=wxID_WXFHAUPT, name='wxfHaupt', parent=prnt,
-              pos=wxPoint(829, 497), size=wxSize(376, 260),
-              style=wxMINIMIZE_BOX | wxCAPTION | wxSYSTEM_MENU | wxTHICK_FRAME | wxRAISED_BORDER,
+              pos=wxPoint(829, 496), size=wxSize(376, 262),
+              style=wxMINIMIZE_BOX | wxCAPTION | wxSYSTEM_MENU,
               title='X Host Chooser')
         self._init_utils()
-        self.SetClientSize(wxSize(368, 226))
+        self.SetClientSize(wxSize(368, 228))
         self.Enable(true)
         self.Center(wxBOTH)
         EVT_ACTIVATE(self, self.OnWxfhauptActivate)
         EVT_CLOSE(self, self.OnWxfhauptClose)
 
         self.nbHaupt = wxNotebook(id=wxID_WXFHAUPTNBHAUPT, name='nbHaupt',
-              parent=self, pos=wxPoint(0, 0), size=wxSize(368, 226),
+              parent=self, pos=wxPoint(0, 0), size=wxSize(368, 228),
               style=wxMAXIMIZE_BOX)
         self.nbHaupt.SetConstraints(LayoutAnchors(self.nbHaupt, true, true,
               true, true))
         self.nbHaupt.SetAutoLayout(true)
         EVT_NOTEBOOK_PAGE_CHANGING(self.nbHaupt, wxID_WXFHAUPTNBHAUPT,
               self.OnNbhauptNotebookPageChanging)
+        EVT_PAINT(self.nbHaupt, self.OnTranslatableControlPaint)
 
         self.winStart = wxWindow(id=wxID_WXFHAUPTWINSTART, name='winStart',
-              parent=self.nbHaupt, pos=wxPoint(0, 0), size=wxSize(360, 200),
+              parent=self.nbHaupt, pos=wxPoint(0, 0), size=wxSize(360, 202),
               style=wxTAB_TRAVERSAL)
 
         self.winSetup = wxWindow(id=wxID_WXFHAUPTWINSETUP, name='winSetup',
-              parent=self.nbHaupt, pos=wxPoint(0, 0), size=wxSize(360, 200),
+              parent=self.nbHaupt, pos=wxPoint(0, 0), size=wxSize(360, 202),
               style=wxTAB_TRAVERSAL)
 
         self.cobZielhost = wxComboBox(choices=['tc34', 'r48', 'r73', 's07nfs',
@@ -76,19 +81,21 @@ class wxfHaupt(wxFrame):
         EVT_KILL_FOCUS(self.cobZielhost, self.OnCobzielhostKillFocus)
 
         self.btnRun = wxButton(id=wxID_WXFHAUPTBTNRUN, label='Verbinden',
-              name='btnRun', parent=self.winStart, pos=wxPoint(24, 152),
+              name='btnRun', parent=self.winStart, pos=wxPoint(16, 160),
               size=wxSize(75, 23), style=0)
         self.btnRun.SetHelpText('IP/Name des Zielrechners eingeben')
         EVT_BUTTON(self.btnRun, wxID_WXFHAUPTBTNRUN, self.OnBtnrunButton)
+        EVT_PAINT(self.btnRun, self.OnTranslatableControlPaint)
 
         self.btnEnde = wxButton(id=wxID_WXFHAUPTBTNENDE, label='Beenden',
-              name='btnEnde', parent=self.winStart, pos=wxPoint(232, 152),
+              name='btnEnde', parent=self.winStart, pos=wxPoint(264, 160),
               size=wxSize(75, 23), style=0)
         EVT_BUTTON(self.btnEnde, wxID_WXFHAUPTBTNENDE, self.OnBtnendeButton)
+        EVT_PAINT(self.btnEnde, self.OnTranslatableControlPaint)
 
         self.cobAufloesung = wxComboBox(choices=['800 600', '1024 768',
               '1280 1024', '1600 1200'], id=wxID_WXFHAUPTCOBAUFLOESUNG,
-              name='cobAufloesung', parent=self.winSetup, pos=wxPoint(96, 8),
+              name='cobAufloesung', parent=self.winSetup, pos=wxPoint(96, 32),
               size=wxSize(125, 21), style=0, validator=wxDefaultValidator,
               value='1280 1024')
         self.cobAufloesung.SetLabel('1280 1024')
@@ -97,48 +104,53 @@ class wxfHaupt(wxFrame):
 
         self.chbRootless = wxCheckBox(id=wxID_WXFHAUPTCHBROOTLESS,
               label='-rootless: Anzeige ohne Hintergrundbild',
-              name='chbRootless', parent=self.winSetup, pos=wxPoint(8, 64),
+              name='chbRootless', parent=self.winSetup, pos=wxPoint(8, 80),
               size=wxSize(272, 13), style=0)
         self.chbRootless.SetValue(false)
         self.chbRootless.SetHelpText('Hilfe rootless')
         EVT_CHECKBOX(self.chbRootless, wxID_WXFHAUPTCHBROOTLESS,
               self.OnChbrootlessCheckbox)
+        EVT_PAINT(self.chbRootless, self.OnTranslatableControlPaint)
 
         self.chbOnce = wxCheckBox(id=wxID_WXFHAUPTCHBONCE,
               label='-once: Nach Beendigung der Session beenden',
-              name='chbOnce', parent=self.winSetup, pos=wxPoint(8, 78),
+              name='chbOnce', parent=self.winSetup, pos=wxPoint(8, 94),
               size=wxSize(280, 16), style=0)
         self.chbOnce.SetValue(true)
         self.chbOnce.SetHelpText('Hiolfe once')
         EVT_CHECKBOX(self.chbOnce, wxID_WXFHAUPTCHBONCE, self.OnChbonceCheckbox)
+        EVT_PAINT(self.chbOnce, self.OnTranslatableControlPaint)
 
         self.chbNoWinKill = wxCheckBox(id=wxID_WXFHAUPTCHBNOWINKILL,
               label='-nowinkill: Abbruch durch Windows unterbinden',
-              name='chbNoWinKill', parent=self.winSetup, pos=wxPoint(8, 96),
+              name='chbNoWinKill', parent=self.winSetup, pos=wxPoint(8, 112),
               size=wxSize(296, 13), style=0)
         self.chbNoWinKill.SetValue(false)
         EVT_CHECKBOX(self.chbNoWinKill, wxID_WXFHAUPTCHBNOWINKILL,
               self.OnChbnowinkillCheckbox)
+        EVT_PAINT(self.chbNoWinKill, self.OnTranslatableControlPaint)
 
         self.chbNoUnixKill = wxCheckBox(id=wxID_WXFHAUPTCHBNOUNIXKILL,
               label='-nounixkill: Abbruch durch Unix mit Ctrl+Alt+Backspace unterbinden',
-              name='chbNoUnixKill', parent=self.winSetup, pos=wxPoint(8, 112),
+              name='chbNoUnixKill', parent=self.winSetup, pos=wxPoint(8, 128),
               size=wxSize(344, 13), style=0)
         self.chbNoUnixKill.SetValue(false)
         EVT_CHECKBOX(self.chbNoUnixKill, wxID_WXFHAUPTCHBNOUNIXKILL,
               self.OnChbnounixkillCheckbox)
+        EVT_PAINT(self.chbNoUnixKill, self.OnTranslatableControlPaint)
 
         self.chbEmulate3Buttons = wxCheckBox(id=wxID_WXFHAUPTCHBEMULATE3BUTTONS,
               label='-emulate3buttons', name='chbEmulate3Buttons',
-              parent=self.winSetup, pos=wxPoint(8, 128), size=wxSize(100, 13),
+              parent=self.winSetup, pos=wxPoint(8, 144), size=wxSize(104, 13),
               style=0)
         self.chbEmulate3Buttons.SetValue(true)
         EVT_CHECKBOX(self.chbEmulate3Buttons, wxID_WXFHAUPTCHBEMULATE3BUTTONS,
               self.OnChbemulate3buttonsCheckbox)
+        EVT_PAINT(self.chbEmulate3Buttons, self.OnTranslatableControlPaint)
 
         self.tcEmulate3ButtonsTimeout = wxTextCtrl(id=wxID_WXFHAUPTTCEMULATE3BUTTONSTIMEOUT,
               name='tcEmulate3ButtonsTimeout', parent=self.winSetup,
-              pos=wxPoint(112, 124), size=wxSize(100, 21), style=0, value='50')
+              pos=wxPoint(128, 140), size=wxSize(32, 21), style=0, value='50')
         self.tcEmulate3ButtonsTimeout.Enable(true)
         EVT_TEXT(self.tcEmulate3ButtonsTimeout,
               wxID_WXFHAUPTTCEMULATE3BUTTONSTIMEOUT,
@@ -146,19 +158,22 @@ class wxfHaupt(wxFrame):
 
         self.stEmulate3ButtonsTimeout = wxStaticText(id=wxID_WXFHAUPTSTEMULATE3BUTTONSTIMEOUT,
               label='timeout (ms)', name='stEmulate3ButtonsTimeout',
-              parent=self.winSetup, pos=wxPoint(216, 128), size=wxSize(56, 13),
+              parent=self.winSetup, pos=wxPoint(168, 144), size=wxSize(104, 13),
               style=0)
+        EVT_PAINT(self.stEmulate3ButtonsTimeout,
+              self.OnTranslatableControlPaint)
 
         self.stXWinBinary = wxStaticText(id=wxID_WXFHAUPTSTXWINBINARY,
               label='XFree86 Binary:', name='stXWinBinary',
-              parent=self.winSetup, pos=wxPoint(8, 44), size=wxSize(75, 13),
+              parent=self.winSetup, pos=wxPoint(8, 56), size=wxSize(80, 13),
               style=0)
+        EVT_PAINT(self.stXWinBinary, self.OnTranslatableControlPaint)
 
         self.cobXWinBinary = wxComboBox(choices=[r'C:\cygwin\usr\X11R6\bin\XWin.exe',
               r'D:\cygwin\usr\X11R6\bin\XWin.exe',
               r'E:\cygwin\usr\X11R6\bin\XWin.exe'],
               id=wxID_WXFHAUPTCOBXWINBINARY, name='cobXWinBinary',
-              parent=self.winSetup, pos=wxPoint(96, 40), size=wxSize(125, 21),
+              parent=self.winSetup, pos=wxPoint(96, 56), size=wxSize(125, 21),
               style=0, validator=wxDefaultValidator,
               value=r'C:\cygwin\usr\X11R6\bin\XWin.exe')
         self.cobXWinBinary.SetLabel(r"C:\cygwin\usr\X11R6\bin\XWin.exe")
@@ -166,31 +181,34 @@ class wxfHaupt(wxFrame):
 
         self.btnBrowseXWinBinary = wxButton(id=wxID_WXFHAUPTBTNBROWSEXWINBINARY,
               label='...', name='btnBrowseXWinBinary', parent=self.winSetup,
-              pos=wxPoint(232, 40), size=wxSize(32, 23), style=0)
+              pos=wxPoint(232, 56), size=wxSize(32, 23), style=0)
         EVT_BUTTON(self.btnBrowseXWinBinary, wxID_WXFHAUPTBTNBROWSEXWINBINARY,
               self.OnBtnbrowsexwinbinaryButton)
 
         self.btnSucheXWinBinary = wxButton(id=wxID_WXFHAUPTBTNSUCHEXWINBINARY,
               label='Suche...', name='btnSucheXWinBinary', parent=self.winSetup,
-              pos=wxPoint(272, 40), size=wxSize(64, 23), style=0)
+              pos=wxPoint(272, 56), size=wxSize(64, 23), style=0)
         EVT_BUTTON(self.btnSucheXWinBinary, wxID_WXFHAUPTBTNSUCHEXWINBINARY,
               self.OnBtnsuchexwinbinaryButton)
+        EVT_PAINT(self.btnSucheXWinBinary, self.OnTranslatableControlPaint)
 
         self.stBefehl = wxStaticText(id=wxID_WXFHAUPTSTBEFEHL,
               label='Auszuf\xfchrender Befehl:', name='stBefehl',
-              parent=self.winSetup, pos=wxPoint(8, 152), size=wxSize(110, 13),
+              parent=self.winSetup, pos=wxPoint(8, 160), size=wxSize(216, 13),
               style=0)
+        EVT_PAINT(self.stBefehl, self.OnTranslatableControlPaint)
 
         self.tcBefehl = wxTextCtrl(id=wxID_WXFHAUPTTCBEFEHL, name='tcBefehl',
-              parent=self.winSetup, pos=wxPoint(8, 168), size=wxSize(320, 21),
+              parent=self.winSetup, pos=wxPoint(8, 176), size=wxSize(320, 21),
               style=0, value='tcBefehl')
 
         self.chbAufloesung = wxCheckBox(id=wxID_WXFHAUPTCHBAUFLOESUNG,
               label='Aufl\xf6sung:', name='chbAufloesung', parent=self.winSetup,
-              pos=wxPoint(8, 16), size=wxSize(73, 13), style=0)
+              pos=wxPoint(8, 36), size=wxSize(80, 13), style=0)
         self.chbAufloesung.SetValue(false)
         EVT_CHECKBOX(self.chbAufloesung, wxID_WXFHAUPTCHBAUFLOESUNG,
               self.OnChbaufloesungCheckbox)
+        EVT_PAINT(self.chbAufloesung, self.OnTranslatableControlPaint)
 
         self.rbZielhost = wxRadioButton(id=wxID_WXFHAUPTRBZIELHOST,
               label='Zielhost:', name='rbZielhost', parent=self.winStart,
@@ -198,14 +216,16 @@ class wxfHaupt(wxFrame):
         self.rbZielhost.SetValue(true)
         EVT_RADIOBUTTON(self.rbZielhost, wxID_WXFHAUPTRBZIELHOST,
               self.OnRbzielhostRadiobutton)
+        EVT_PAINT(self.rbZielhost, self.OnTranslatableControlPaint)
 
         self.rbBroadcast = wxRadioButton(id=wxID_WXFHAUPTRBBROADCAST,
               label='Broadcast (Connect zu "zuf\xe4lligem" Rechner)',
-              name='rbBroadcast', parent=self.winStart, pos=wxPoint(24, 72),
+              name='rbBroadcast', parent=self.winStart, pos=wxPoint(24, 80),
               size=wxSize(288, 13), style=wxTAB_TRAVERSAL)
         self.rbBroadcast.SetValue(false)
         EVT_RADIOBUTTON(self.rbBroadcast, wxID_WXFHAUPTRBBROADCAST,
               self.OnRbbroadcastRadiobutton)
+        EVT_PAINT(self.rbBroadcast, self.OnTranslatableControlPaint)
 
         self.chbFont = wxCheckBox(id=wxID_WXFHAUPTCHBFONT,
               label="-fp (fontpath) angeben (f\xfcr Sun's)?", name='chbFont',
@@ -213,35 +233,56 @@ class wxfHaupt(wxFrame):
               style=0)
         self.chbFont.SetValue(false)
         EVT_CHECKBOX(self.chbFont, wxID_WXFHAUPTCHBFONT, self.OnChbfontCheckbox)
+        EVT_PAINT(self.chbFont, self.OnTranslatableControlPaint)
 
         self.chbEigeneIP = wxCheckBox(id=wxID_WXFHAUPTCHBEIGENEIP,
               label='Eigene IP:', name='chbEigeneIP', parent=self.winStart,
-              pos=wxPoint(24, 108), size=wxSize(96, 13), style=0)
+              pos=wxPoint(24, 124), size=wxSize(96, 13), style=0)
         self.chbEigeneIP.SetValue(true)
         EVT_CHECKBOX(self.chbEigeneIP, wxID_WXFHAUPTCHBEIGENEIP,
               self.OnChbeigeneipCheckbox)
+        EVT_PAINT(self.chbEigeneIP, self.OnTranslatableControlPaint)
 
         self.staticLine1 = wxStaticLine(id=wxID_WXFHAUPTSTATICLINE1,
-              name='staticLine1', parent=self.winStart, pos=wxPoint(32, 96),
+              name='staticLine1', parent=self.winStart, pos=wxPoint(32, 104),
               size=wxSize(264, 2), style=0)
 
         self.btnSaveConfig = wxButton(id=wxID_WXFHAUPTBTNSAVECONFIG,
               label='Speichere', name='btnSaveConfig', parent=self.winStart,
-              pos=wxPoint(128, 152), size=wxSize(75, 23), style=0)
+              pos=wxPoint(144, 160), size=wxSize(75, 23), style=0)
         EVT_BUTTON(self.btnSaveConfig, wxID_WXFHAUPTBTNSAVECONFIG,
               self.OnBtnsaveconfigButton)
+        EVT_PAINT(self.btnSaveConfig, self.OnTranslatableControlPaint)
 
         self.tcEigeneIP = wxTextCtrl(id=wxID_WXFHAUPTTCEIGENEIP,
-              name='tcEigeneIP', parent=self.winStart, pos=wxPoint(136, 104),
+              name='tcEigeneIP', parent=self.winStart, pos=wxPoint(136, 120),
               size=wxSize(168, 21), style=0, value='')
-        EVT_KILL_FOCUS(self.tcEigeneIP, self.OnTceigeneipKillFocus)
         EVT_TEXT(self.tcEigeneIP, wxID_WXFHAUPTTCEIGENEIP,
               self.OnTceigeneipText)
+
+        self.stLanguage = wxStaticText(id=wxID_WXFHAUPTSTLANGUAGE,
+              label='Sprache:', name='stLanguage', parent=self.winSetup,
+              pos=wxPoint(8, 10), size=wxSize(64, 13), style=0)
+        EVT_PAINT(self.stLanguage, self.OnTranslatableControlPaint)
+
+        self.chLanguage = wxChoice(choices=['English', 'Deutsch'],
+              id=wxID_WXFHAUPTCHLANGUAGE, name='chLanguage',
+              parent=self.winSetup, pos=wxPoint(96, 8), size=wxSize(125, 21),
+              style=0, validator=wxDefaultValidator)
+        self.chLanguage.SetSelection(1)
+        EVT_CHOICE(self.chLanguage, wxID_WXFHAUPTCHLANGUAGE,
+              self.OnChlanguageChoice)
 
         self._init_coll_nbHaupt_Pages(self.nbHaupt)
 
     def __init__(self, parent):
+        
         self.config = {}
+
+        # Dictionary containing all the translatable texts.
+        # Set by self.SetTexts()
+        self.__labels = {}
+        
         self.cfg_app_name = 'X Host Chooser'
         self.cfg_vendor_name = 'Delphi Deutschland GmbH'
         self._init_ctrls(parent)
@@ -257,7 +298,8 @@ class wxfHaupt(wxFrame):
         
         ip = socket.gethostbyname(socket.gethostname())
         self.UpdateEigeneIP(wert = ip)
-        # self.cobEigeneIP.SetValue(ip)
+
+        self.SetTexts(self.chLanguage.GetSelection())
 
 ######################################################## Frame
 
@@ -279,6 +321,7 @@ class wxfHaupt(wxFrame):
             self.UpdateNoWinKill()
             self.UpdateXWinBinary()
             self.UpdateFont()
+            self.UpdateLanguage()
             
         event.Skip()
 
@@ -329,6 +372,8 @@ class wxfHaupt(wxFrame):
 
     def OnRbzielhostRadiobutton(self, event):
         """Update Auswahl des Zielhosts"""
+        
+        self.Layout()
         
         # Zielhost bzw. -broadcast Radiobuttons updaten
         self.UpdateZielhostBroadcast()
@@ -452,6 +497,14 @@ class wxfHaupt(wxFrame):
         
 ######################################################## Eigene Methoden
 
+    def GetLabelText(self, key):
+        """Liefere das Label für den angegebenen Key."""
+        
+        if key in self.__labels:
+            return self.__labels[key]
+        else:
+            return 'Key %s nicht vorhanden' % key
+
     def BaueBefehlNeu(self):
         """Baue den im Textfeld tcBefehl gespeicherten Befehl neu auf."""
         
@@ -516,7 +569,17 @@ class wxfHaupt(wxFrame):
         
         # Befehl neu aufbauen
         self.BaueBefehlNeu()
+        
+        pass
+    
+    def GetConfigKey(self, key):
+        """Gebe den in der Konfiguration gespeicherte Key zurück."""
 
+        if key in self.config:
+            return self.config[key]
+        else:
+            return None
+    
     def SaveConfig(self):
         """Methode, um die Konfiguration für einen späteren Aufruf zu speichern"""
         
@@ -578,16 +641,6 @@ class wxfHaupt(wxFrame):
                 cfg.Write('from', '')
             else:
                 cfg.Write('from', conf['from'])
-            
-##        if (cfg.HasGroup('EigeneIPs')):
-##            cfg.DeleteGroup('EigeneIPs')
-##        cfg.SetPath('EigeneIPs')
-##        n = 0
-##        for i in range(self.cobEigeneIP.GetCount()):
-##            if (string.strip(self.cobEigeneIP.GetString(i)) != ''):
-##                n = n+1
-##                cfg.Write('Eigene IP %d' % n, self.cobEigeneIP.GetString(i))
-##        cfg.SetPath('..')
 
         if (conf.has_key('query')):
             if (conf['query'] is None):
@@ -613,7 +666,6 @@ class wxfHaupt(wxFrame):
         # cfgs[0][1]: Combobox das alle Werte der Group aufnimmt
         # cfgs[1][0]: Name des ausgewählten Elements aus der Config
         # cfgs[1][1]: Methode um dieses Element zu übernehmen
-##                (('Eigene IPs', self.cobEigeneIP), ('from', self.UpdateEigeneIP)),
         cfgs = (
                 (('Ziel Hosts', self.cobZielhost), ('query', self.UpdateZielhostBroadcast)),
                 (('Auflösungen', self.cobAufloesung), ('auflösung', self.UpdateAufloesungCheckbox)),
@@ -660,7 +712,8 @@ class wxfHaupt(wxFrame):
                 ('nounixkill', self.UpdateNoUnixKill), 
                 ('nowinkill', self.UpdateNoWinKill), 
                 ('emulate3buttons', self.UpdateChbEmulate3Buttons),
-                ('font', self.UpdateFont)
+                ('font', self.UpdateFont),
+                ('language', self.UpdateLanguage)
                )
 
         # Durchlaufe auch diese Liste
@@ -671,10 +724,13 @@ class wxfHaupt(wxFrame):
                 
                 # Lesen und an Updatemethode verfüttern
                 c[1](cfg.ReadInt(c[0]))
+
+        # Die Sprache hat sich u.U. geändert.  Texte setzen
+        self.SetTexts(self.GetConfigKey('Language'))
         
         # Fertig mit LoadConfig
         return true
-
+    
     def UpdateXWinBinary(self, wert = None):
         """Speichere das ausgewählte Cygwin XWin Binary."""
         
@@ -694,8 +750,6 @@ class wxfHaupt(wxFrame):
     def UpdateNoUnixKill(self, wert = None):
         """Update Auswahl für Checkbox 'NoUnixKill' in der Config"""
         
-        ##print "   in UpdateNoUnixKill"
-        
         if (not (wert is None)):
             self.chbNoUnixKill.SetValue(wert)
         
@@ -703,8 +757,6 @@ class wxfHaupt(wxFrame):
 
     def UpdateEigeneIP(self, wert = None):
         """Update 'from', da auf Checkbox chbEigeneIP geklickt wurde"""
-        
-        ##print "    in UpdateEigeneIP"
         
         if (not (wert is None)):
             self.chbEigeneIP.SetValue(wert != '')
@@ -726,8 +778,6 @@ class wxfHaupt(wxFrame):
     def UpdateChbEmulate3Buttons(self, wert = None):
         """Update 'Emulate3ButtonsTimeout', da auf Checkbox chbEmlutate3Buttons geklickt wurde"""
         
-        ##print "     in UpdateChbEmulate3Buttons"
-        
         if (not (wert is None)):
             self.chbEmulate3Buttons.SetValue(wert != '')
             self.tcEmulate3ButtonsTimeout.SetValue(`wert`)
@@ -742,8 +792,6 @@ class wxfHaupt(wxFrame):
     def UpdateAufloesungCheckbox(self, wert = None):
         """Update 'auflösung', da die Checkbox chbAufloesung geklickt wurde"""
         
-        ##print "      in UpdateAufloesungCheckbox"
-        
         if (not (wert is None)):
             self.chbAufloesung.SetValue(wert != '')
             self.cobAufloesung.SetValue(wert)
@@ -757,8 +805,6 @@ class wxfHaupt(wxFrame):
 
     def UpdateZielhostBroadcast(self, wert = None):
         """Schalte Zielhost bzw. Broadcast ein/aus"""
-        
-        ##print "       in UpdateZielhostBroadcast"
         
         # Wenn auf dieses Event ausgelöst wird, wurde der Radiobutton für "Zielhost"
         # gedrückt.  Dh. Textfeld für IP des Zielhosts aktivieren und Radiobutton
@@ -815,8 +861,6 @@ class wxfHaupt(wxFrame):
     def UpdateFont(self, wert = None):
         """Update Auswahl für Checkbox 'font' in der Config"""
         
-        ##print "        in UpdateRootless"
-        
         if (not (wert is None)):
             self.chbFont.SetValue(wert)
         
@@ -825,8 +869,6 @@ class wxfHaupt(wxFrame):
     def UpdateRootless(self, wert = None):
         """Update Auswahl für Checkbox 'rootless' in der Config"""
         
-        ##print "        in UpdateRootless"
-        
         if (not (wert is None)):
             self.chbRootless.SetValue(wert)
         
@@ -834,8 +876,6 @@ class wxfHaupt(wxFrame):
         
     def UpdateOnce(self, wert = None):
         """Update Auswahl für Checkbox 'once' in der Config"""
-        
-        ##print "         in UpdateOnce"
         
         if (not (wert is None)):
             self.chbOnce.SetValue(wert)
@@ -858,25 +898,100 @@ class wxfHaupt(wxFrame):
                 # Text noch nicht vorhanden -> Anhängen
                 combobox.Append(combobox.GetValue())
 
+    def untranslatedText(self, text):
+        """Return the text without any modifications.  Used by SetTexts."""
+        return text
+
+    def SetTexts(self, lang_index):
+        """Set texts of all the elements on the frame.
+        Parameters:
+            lang: Index to the given language, as set in the chLanguage element.
+            """
+
+        # Liste mit den unterstützten Sprachen
+        langs = ['en', 'de']
+
+        try:
+            index = int(lang_index)
+        except:
+            index = 1
+            
+        lang_code = langs[index]
+        
+        try:
+            t = gettext.translation(domain = 'xhc', localedir = 'locale', 
+                                    languages = [lang_code])
+            fn = t.gettext
+        except IOError:
+            fn = self.untranslatedText
+
+        global _
+        _ = fn
+
+        self.__labels['btnEnde']                    = _('Exit')
+        self.__labels['btnRun']                     = _('Connect')
+        self.__labels['btnSaveConfig']              = _('Save')
+        self.__labels['btnSucheXWinBinary']         = _('Search...')
+        self.__labels['chbAufloesung']              = _('Resolution:')
+        self.__labels['chbEigeneIP']                = _('Local address:')
+        self.__labels['chbEmulate3Buttons']         = _('-emulate3buttons')  # Nicht übersetzen
+        self.__labels['chbFont']                    = _("-fp: Set search path for fonts to remote machine (Req.d for Sun's)?")
+        self.__labels['chbNoWinKill']               = _('-nowinkill: Ctrl+Alt+Backspace does not exit the X Server')
+        self.__labels['chbNoUnixKill']              = _('-nounixkill: Alt+F4 does not exit the X Server')
+        self.__labels['chbOnce']                    = _('-once: Quit after termination of session')
+        self.__labels['chbRootless']                = _("-rootless: Don't use a root window")
+        self.__labels['rbBroadcast']                = _('Broadcast (Connect to "random" server)')
+        self.__labels['rbZielhost']                 = _('Target host:')
+        self.__labels['stBefehl']                   = _('Auszuführender Befehl:')
+        self.__labels['stEmulate3ButtonsTimeout']   = _('timeout (ms)')
+        self.__labels['stLanguage']                 = _('Language:')
+        self.__labels['stXWinBinary']               = _('XFree86 Binary:')
+
+    def UpdateLanguage(self, wert = None):
+        """Speichere die ausgewählte Sprache, und sofern sie sich von der
+        vorherigen Unterscheidet, tausche die Texte gegen die der neuen Sprache
+        aus."""
+        
+        if (not (wert is None)):
+            self.chLanguage.SetSelection(wert)
+            nbSelection = self.nbHaupt.GetSelection()
+            self.SetTexts(self.chLanguage.GetSelection())
+            if nbSelection != -1:
+                self.nbHaupt.SetSelection(0)
+                self.nbHaupt.SetSelection(1)
+                self.nbHaupt.SetSelection(nbSelection)
+
+        self.UpdateConfig('Language', self.chLanguage.GetSelection())
+
+        
+######################################################## Paint Event Handler
+
+    def OnChlanguageChoice(self, event):
+        """Auswahl im Feld der Sprachen."""
+        
+        self.UpdateLanguage(self.chLanguage.GetSelection())
+        event.Skip()
+    
 ######################################################## Anderes
 
-    def OnButton1Button(self, event):
-        a = "2"
-        
-        event.Skip()
-
     def OnBtnsaveconfigButton(self, event):
+        """User hat auf Knopf gedrückt, um die Konfiguration abzuspeichern."""
 
         # Konfiguration abspeichern
         self.SaveConfig()
 
         event.Skip()
 
-    def OnTceigeneipKillFocus(self, event):
-        event.Skip()
-
     def OnTceigeneipText(self, event):
         
         self.UpdateEigeneIP(wert = None)
+        
+        event.Skip()
+
+    def OnTranslatableControlPaint(self, event):
+        """Setze das Label des aufrufenden Objects auf den durch gettext
+        übersetzten Wert."""
+        
+        event.GetEventObject().SetLabel(self.GetLabelText(event.GetEventObject().GetName()))
         
         event.Skip()

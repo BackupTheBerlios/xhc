@@ -8,7 +8,7 @@
 # Author:      Alexander Skwar <ASkwar@email-server.info>                     
 #                                                                             
 # Created:     2003/12/03                                                     
-# RCS-ID:      $Id: setup.py,v 1.1 2003/03/13 13:53:28 askwar Exp $                                                
+# RCS-ID:      $Id: setup.py,v 1.2 2003/03/15 09:31:11 askwar Exp $                                                
 # Copyright:   (c) 2003                                                       
 # Licence:     GPL                                                            
 #-----------------------------------------------------------------------------
