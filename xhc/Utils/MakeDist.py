@@ -11,19 +11,19 @@
 # Author:      Alexander Skwar <ASkwar@email-server.info>                     
 #                                                                             
 # Created:     2003/12/03                                                     
-# RCS-ID:      $Id: MakeDist.py,v 1.2 2003/03/17 12:56:25 askwar Exp $        
+# RCS-ID:      $Id: MakeDist.py,v 1.3 2003/07/08 20:53:20 askwar Exp $        
 # Copyright:   (c) 2003                                                       
 # Licence:     GPL                                                            
 #-----------------------------------------------------------------------------
 
-# Define path and options for rk archiver
-rk = {
-    # Complete path to the folder containing the rk archiver
-    'path':         r'C:\Tools\rk',
-    # Name of the rk archiver executable in 'path'
-    'executable':   'rk.exe',
-    # Parameters used for calling rk.exe
-    'params':       r'-r -mx3 -I5 -SFX -S%(path)s\win32.sfx'
+# Define path and options for RAR archiver
+rar = {
+    # Complete path to the folder containing the archiver
+    'path':         r'C:\Programme\WinRAR',
+    # Name of the archiver executable in 'path'
+    'executable':   'rar.exe',
+    # Parameters used for calling the archiver executable
+    'params':       r'a -av -dh -isnd -k -m5 -mdg -ow -r -rr -s -sfx -tl'
 }
 
 # ------------------> Nothing user-configurable below here! <------------------ 
@@ -40,10 +40,6 @@ opj = os.path.join
 from glob import glob
 import sys
 from __version__ import *
-
-# Insert path into params, so that the SFX stub can be found
-rk['params'] = rk['params'] % rk
-
 
 def uniques(list): # requires that elements of list be hashable!
     """Unique the elements of the list."""
@@ -123,6 +119,28 @@ def MakeRK():
         
     return rk_name
 
+def MakeRAR():
+    """Create SFX using RAR."""
+
+    # This should have created a subdirectory with the name of the 
+    # first script under the "dist" directory.
+    # Change to this directory before calling rar
+    old_cwd = os.getcwd()
+    rar_name = ''
+    try:
+        os.chdir(os.path.join('dist', os.path.splitext(scripts[0])[0]))
+        
+        # Call rar
+        rar_name = "%s-%s.exe" % (name.replace(' ', "_"), version)
+        cmd = '%s %s "..\%s" *' % (os.path.join(rar['path'], rar['executable']), rar['params'], rar_name)
+        print "Running: " + cmd + "\n"
+        os.system(cmd)
+        
+    finally:
+        os.chdir(old_cwd)
+        
+    return rar_name
+
 def MakeSRC():
     """Create source distribution files (.tar.bz2, .tar.gz and .zip)."""
     
@@ -201,7 +219,7 @@ def Upload(upload_files):
         print msg
 
 def main():
-    """Create Windows executable and SFX with rk."""
+    """Create Windows executable and SFX with rar."""
 
     UpdateVersion()
     
@@ -217,9 +235,9 @@ def main():
         upload_files = []
         # Create Windows EXE with py2exe
         MakeEXE()
-        # Create SFX with rk
+        # Create SFX with rar
         os.chdir('..')
-        upload_files.append(MakeRK())
+        upload_files.append(MakeRAR())
         # Create Source distribution
         upload_files += MakeSRC()
         # Upload files

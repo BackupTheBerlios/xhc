@@ -8,7 +8,7 @@
 # Author:      Alexander Skwar <ASkwar@email-server.info>                     
 #                                                                             
 # Created:     2003/12/03                                                     
-# RCS-ID:      $Id: setup.py,v 1.2 2003/03/17 12:56:25 askwar Exp $           
+# RCS-ID:      $Id: setup.py,v 1.3 2003/07/08 20:53:20 askwar Exp $           
 # Copyright:   (c) 2003                                                       
 # Licence:     GPL                                                            
 #-----------------------------------------------------------------------------
@@ -48,7 +48,7 @@ def main():
         	scripts		= scripts, 
         	description	= description, 
         	author		= author, 
-        	author_email= author_email, 
+        	author_email	= author_email, 
         	data_files	= new_data_files,
         )
         

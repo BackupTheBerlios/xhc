@@ -5,7 +5,7 @@
 # Author:      Alexander Skwar <ASkwar@email-server.info>                     
 #                                                                             
 # Created:     2003/17/03                                                     
-# RCS-ID:      $Id: __version__.py,v 1.5 2003/03/30 11:03:01 askwar Exp $                                          
+# RCS-ID:      $Id: __version__.py,v 1.6 2003/07/08 20:53:20 askwar Exp $     
 # Copyright:   (c) 2003                                                       
 # Licence:     GPL                                                            
 #-----------------------------------------------------------------------------
@@ -14,23 +14,25 @@ import os.path
 opj = os.path.join
 
 # Version of the application
-version     = "1.20"
+version		= "1.21"
 # Name of the application
 name		= 'X-Host Chooser'
 # Short name of the application
-short_name  = 'xhc'
+short_name	= 'xhc'
 # Description of the program
 description	= 'Launch pad for XWin.exe from Cygwin'
 # Additional data files - used by py2exe
 # Files are supposed to be in a directory one level up of the directory
 # containing this script.
-data_files  = [('Images', [opj('Images', '*.gif'), opj('Images', '*.ico'), opj('Images', '*.jpg'), opj('Images', '*.xpm')]),
-                (opj('locale', 'de', 'LC_MESSAGES'), [opj('locale', 'de', 'LC_MESSAGES', '*.mo')])]
+data_files      = [('Images', [opj('Images', '*.gif'), opj('Images', '*.ico'), 
+                               opj('Images', '*.jpg'), opj('Images', '*.xpm')]),
+		   (opj('locale', 'de', 'LC_MESSAGES'), 
+		   [opj('locale', 'de', 'LC_MESSAGES', '*.mo')])]
 
 # Author of the program
 author		= 'Alexander Skwar'
 # Author's email
-author_email= 'ASkwar@email-server.info'
+author_email	= 'alexander@skwar.name'
 
 # Scripts of the program - used by py2exe
 scripts		= ['xhc.py']
@@ -58,5 +60,5 @@ upload = {
     'pasv': True
 }
 # Uncomment the following line to DISABLE upload.
-# upload = None
+upload = None
 
