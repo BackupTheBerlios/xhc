@@ -1,3 +1,17 @@
+/*
+#-----------------------------------------------------------------------------
+# Name:        styles.css                                                     
+# Purpose:     CSS stylesheet of xhc homepage                                 
+#                                                                             
+# Author:      Alexander Skwar <ASkwar@email-server.info>                     
+#                                                                             
+# Created:     2003/17/03                                                     
+# RCS-ID:      $Id: styles.css,v 1.2 2003/03/17 13:07:07 askwar Exp $                                              
+# Copyright:   (c) 2003                                                       
+# Licence:     GPL                                                            
+#-----------------------------------------------------------------------------
+*/
+
 #mainCol {
 	float: right;
 	width: 67%;

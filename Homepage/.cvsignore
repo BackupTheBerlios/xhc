@@ -1,0 +1,16 @@
+RCS     SCCS    CVS     CVS.adm
+RCSLOG  cvslog.*
+tags    TAGS
+.make.state     .nse_depinfo
+*~      #*      .#*     ,*      _$*     *$
+*.old   *.bak   *.BAK   *.orig  *.rej   .del-*
+*.a     *.olb   *.o     *.obj   *.so    *.exe
+*.Z     *.elc   *.ln
+core
+*.pyc   *.pyo
+*.bz2   *gz     *.zip
+build   dist
+*.swp   .*.swp  .*~
+*.mo
+.xvpics
+
