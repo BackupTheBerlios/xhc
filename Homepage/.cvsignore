@@ -13,4 +13,5 @@ build   dist
 *.swp   .*.swp  .*~
 *.mo
 .xvpics
+usage
 
