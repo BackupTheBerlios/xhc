@@ -5,7 +5,7 @@
 # Author:      Alexander Skwar <ASkwar@email-server.info>                     
 #                                                                             
 # Created:     2003/17/03                                                     
-# RCS-ID:      $Id: __version__.py,v 1.3 2003/03/30 09:39:22 askwar Exp $                                          
+# RCS-ID:      $Id: __version__.py,v 1.4 2003/03/30 10:09:12 askwar Exp $                                          
 # Copyright:   (c) 2003                                                       
 # Licence:     GPL                                                            
 #-----------------------------------------------------------------------------
@@ -57,5 +57,5 @@ upload = {
     'dir': '/incoming',
     'pasv': True
 }
-upload = None
+# upload = None
 
