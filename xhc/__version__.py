@@ -1,9 +1,9 @@
 import glob
 import os.path
 
-def uniques(list): # requires that elements of list be hashable!
-    d = {}
-    for x in list: d[x] = None
+def uniques(list): # requires that elements of list be hashable!
+    d = {}
+    for x in list: d[x] = None
     return d.keys()
 
 # Version of the application

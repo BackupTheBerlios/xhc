@@ -4,14 +4,14 @@
 #Boa:PyApp:main
 
 #-----------------------------------------------------------------------------
-# Name:        MakeDist.py                                                     
+# Name:        MakeDist.py                                                    
 # Purpose:     Small wrapper script to create Windows executable and SFX      
 #              archive for distribution                                       
 #                                                                             
 # Author:      Alexander Skwar <ASkwar@email-server.info>                     
 #                                                                             
 # Created:     2003/12/03                                                     
-# RCS-ID:      $Id: MakeDist.py,v 1.5 2003/03/15 12:35:29 askwar Exp $                                              
+# RCS-ID:      $Id: MakeDist.py,v 1.6 2003/03/16 16:22:59 askwar Exp $        
 # Copyright:   (c) 2003                                                       
 # Licence:     GPL                                                            
 #-----------------------------------------------------------------------------
@@ -164,7 +164,7 @@ def MakeSRC():
     return source_files
 
 def Upload(upload_files):
-    """Upload the source_files to ftp://ftp.berlios.de/incoming/."""
+    """Upload the source_files to configured FTP server."""
     
     print "Uploading files to FTP server."
     from ftplib import FTP
