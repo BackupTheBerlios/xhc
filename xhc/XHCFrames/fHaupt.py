@@ -7,7 +7,7 @@
 # Author:      Alexander Skwar <ASkwar@email-server.info>                     
 #                                                                             
 # Created:     2003/17/03                                                     
-# RCS-ID:      $Id: fHaupt.py,v 1.2 2003/03/17 12:56:25 askwar Exp $                                               
+# RCS-ID:      $Id: fHaupt.py,v 1.3 2003/03/30 09:18:38 askwar Exp $                                               
 # Copyright:   (c) 2003                                                       
 # Licence:     GPL                                                            
 #-----------------------------------------------------------------------------
@@ -450,12 +450,24 @@ class fHaupt(wxFrame):
         self.UpdateFont()
         event.Skip()
 
+    def OnChlanguageChoice(self, event):
+        """Auswahl im Feld der Sprachen."""
+        
+        self.UpdateLanguage(self.chLanguage.GetSelection())
+        event.Skip()
+
 ######################################################## Textcontrols
 
     def OnTcemulate3buttonstimeoutText(self, event):
         """Der User hat Text in dem Feld für den Emulate3Buttons Timeout eingegeben"""
         
         self.UpdateConfig('emulate3buttons', self.tcEmulate3ButtonsTimeout.GetValue())
+        event.Skip()
+
+    def OnTceigeneipText(self, event):
+        
+        self.UpdateEigeneIP(wert = None)
+        
         event.Skip()
 
 ######################################################## Buttons
@@ -499,6 +511,14 @@ class fHaupt(wxFrame):
         
         dlg.ShowModal()
         
+        event.Skip()
+
+    def OnBtnsaveconfigButton(self, event):
+        """User hat auf Knopf gedrückt, um die Konfiguration abzuspeichern."""
+
+        # Konfiguration abspeichern
+        self.SaveConfig()
+
         event.Skip()
         
 ######################################################## Eigene Methoden
@@ -599,7 +619,7 @@ class fHaupt(wxFrame):
             return
         
         # Speichere Werte aus den Checkboxen
-        for name in ('font', 'rootless', 'once', 'nowinkill', 'nounixkill'):
+        for name in ('font', 'rootless', 'once', 'nowinkill', 'nounixkill', 'Language'):
             if (conf.has_key(name)):
                 wert = conf[name]
                 try:
@@ -719,7 +739,7 @@ class fHaupt(wxFrame):
                 ('nowinkill', self.UpdateNoWinKill), 
                 ('emulate3buttons', self.UpdateChbEmulate3Buttons),
                 ('font', self.UpdateFont),
-                ('language', self.UpdateLanguage)
+                ('Language', self.UpdateLanguage)
                )
 
         # Durchlaufe auch diese Liste
@@ -942,13 +962,13 @@ class fHaupt(wxFrame):
         self.__labels['chbEigeneIP']                = _('Local address:')
         self.__labels['chbEmulate3Buttons']         = _('-emulate3buttons')  # Nicht übersetzen
         self.__labels['chbFont']                    = _("-fp: Set search path for fonts to remote machine (Req.d for Sun's)?")
-        self.__labels['chbNoWinKill']               = _('-nowinkill: Ctrl+Alt+Backspace does not exit the X Server')
-        self.__labels['chbNoUnixKill']              = _('-nounixkill: Alt+F4 does not exit the X Server')
+        self.__labels['chbNoWinKill']               = _('-nowinkill: Alt+F4 does not exit the X Server')
+        self.__labels['chbNoUnixKill']              = _('-nounixkill: Ctrl+Alt+Backspace does not exit the X Server')
         self.__labels['chbOnce']                    = _('-once: Quit after termination of session')
         self.__labels['chbRootless']                = _("-rootless: Don't use a root window")
         self.__labels['rbBroadcast']                = _('Broadcast (Connect to "random" server)')
         self.__labels['rbZielhost']                 = _('Target host:')
-        self.__labels['stBefehl']                   = _('Auszuführender Befehl:')
+        self.__labels['stBefehl']                   = _('Command:')
         self.__labels['stEmulate3ButtonsTimeout']   = _('timeout (ms)')
         self.__labels['stLanguage']                 = _('Language:')
         self.__labels['stXWinBinary']               = _('XFree86 Binary:')
@@ -968,32 +988,9 @@ class fHaupt(wxFrame):
                 self.nbHaupt.SetSelection(nbSelection)
 
         self.UpdateConfig('Language', self.chLanguage.GetSelection())
-
         
 ######################################################## Paint Event Handler
-
-    def OnChlanguageChoice(self, event):
-        """Auswahl im Feld der Sprachen."""
         
-        self.UpdateLanguage(self.chLanguage.GetSelection())
-        event.Skip()
-    
-######################################################## Anderes
-
-    def OnBtnsaveconfigButton(self, event):
-        """User hat auf Knopf gedrückt, um die Konfiguration abzuspeichern."""
-
-        # Konfiguration abspeichern
-        self.SaveConfig()
-
-        event.Skip()
-
-    def OnTceigeneipText(self, event):
-        
-        self.UpdateEigeneIP(wert = None)
-        
-        event.Skip()
-
     def OnTranslatableControlPaint(self, event):
         """Setze das Label des aufrufenden Objects auf den durch gettext
         übersetzten Wert."""
@@ -1001,4 +998,6 @@ class fHaupt(wxFrame):
         event.GetEventObject().SetLabel(self.GetLabelText(event.GetEventObject().GetName()))
         
         event.Skip()
+    
+######################################################## Anderes
 

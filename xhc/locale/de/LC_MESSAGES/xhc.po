@@ -48,12 +48,12 @@ msgid "-fp: Set search path for fonts to remote machine (Req.d for Sun's)?"
 msgstr "-fp: FontPath angeben (zwingend bei Sun's)?"
 
 #: fHaupt.py:332
-msgid "-nowinkill: Ctrl+Alt+Backspace does not exit the X Server"
-msgstr "-nowinkill: Ctrl+Alt+Backspace beendet den X Server nicht"
+msgid "-nowinkill: Alt+F4 does not exit the X Server"
+msgstr "-nowinkill: Alt+F4 beendet den X Server nicht"
 
 #: fHaupt.py:333
-msgid "-nounixkill: Alt+F4 does not exit the X Server"
-msgstr "-nounixkill: Alt+F4 beendet den X Server nicht"
+msgid "-nounixkill: Ctrl+Alt+Backspace does not exit the X Server"
+msgstr "-nounixkill: Ctrl+Alt+Backspace beendet den X Server nicht"
 
 #: fHaupt.py:334
 msgid "-once: Quit after termination of session"

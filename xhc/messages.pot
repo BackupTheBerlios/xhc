@@ -5,7 +5,7 @@
 # Author:      Alexander Skwar <ASkwar@email-server.info>                     
 #                                                                             
 # Created:     2003/17/03                                                     
-# RCS-ID:      $Id: messages.pot,v 1.2 2003/03/17 12:56:25 askwar Exp $                                            
+# RCS-ID:      $Id: messages.pot,v 1.3 2003/03/30 09:18:38 askwar Exp $                                            
 # Copyright:   (c) 2003                                                       
 # Licence:     GPL                                                            
 #-----------------------------------------------------------------------------
@@ -60,11 +60,11 @@ msgid "-fp: Set search path for fonts to remote machine (Req.d for Sun's)?"
 msgstr ""
 
 #: fHaupt.py:332
-msgid "-nowinkill: Ctrl+Alt+Backspace does not exit the X Server"
+msgid "-nowinkill: Alt+F4 does not exit the X Server"
 msgstr ""
 
 #: fHaupt.py:333
-msgid "-nounixkill: Alt+F4 does not exit the X Server"
+msgid "-nounixkill: Ctrl+Alt+Backspace does not exit the X Server"
 msgstr ""
 
 #: fHaupt.py:334
